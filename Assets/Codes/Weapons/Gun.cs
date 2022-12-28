@@ -145,6 +145,11 @@ namespace Codes.Weapon
                 CrossUI.SetActive(true);    
             }
         }
+
+        public Animator getAnimator()
+        {
+            return GunAnimator;
+        }
         public abstract void attack();
         protected abstract bool isReloading();
         protected abstract void PlayFireAnimation();

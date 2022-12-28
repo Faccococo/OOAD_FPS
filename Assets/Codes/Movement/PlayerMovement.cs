@@ -16,12 +16,14 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping;
     private bool isWalking;
     private AudioSource audioSource;
+    private Animator character_animator;
 
     public float crouch_height;
     public float Speed;
     public float Jump_height;
     public float Gravity;
-    public Animator character_animator;
+    public WeaponManager weapon;
+    public float resetTime;
 
     public AudioClip walkingSound;
     public AudioClip runingSound;
@@ -32,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
         characterController= GetComponent<CharacterController>();
         characterTransform = transform;
         originHeight = characterController.height;
+        time_floating = 0;
+        character_animator = weapon.Main_Weapon.getAnimator();
     }
 
     private void Update()
@@ -41,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = false;
         isCrouching = false;
         isWalking= false;
+        character_animator = weapon.Main_Weapon.getAnimator();
 
         if (!isJumping)
         {
@@ -63,6 +68,13 @@ public class PlayerMovement : MonoBehaviour
             if (isCrouching) StartCoroutine(change_height(crouch_height));
             else StartCoroutine(change_height(originHeight));
         }
+        if (time_floating >= resetTime)
+        {
+            Physics.autoSyncTransforms = true;
+            characterTransform.position = new Vector3(0, 0, 0);
+        }
+        Debug.Log(characterTransform.position);
+        Debug.Log(time_floating);
         time_floating += Time.deltaTime;
         move_direction.y -= 0.5f * Gravity * (Time.deltaTime + 2 * time_floating) * Time.deltaTime;
         

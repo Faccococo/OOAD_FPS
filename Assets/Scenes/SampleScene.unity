@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &266587116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266587115}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 7.96}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 16.099873, y: 8.764, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22069,6 +22069,7 @@ GameObject:
   - component: {fileID: 2237385560734658266}
   - component: {fileID: 2237385560734658268}
   - component: {fileID: 2237385560734658269}
+  - component: {fileID: 2237385560734658270}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -22152,7 +22153,8 @@ MonoBehaviour:
   Speed: 7
   Jump_height: 2
   Gravity: 35
-  character_animator: {fileID: 2237832121652850050}
+  weapon: {fileID: 2237385560734658268}
+  resetTime: 5.02
   walkingSound: {fileID: 0}
   runingSound: {fileID: 0}
 --- !u!114 &2237385560734658268
@@ -22179,12 +22181,26 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 300
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &2237385560734658270
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237385560734658264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2237390772876058192
 GameObject:
   m_ObjectHideFlags: 0
