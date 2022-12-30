@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -27,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip walkingSound;
     public AudioClip runingSound;
-
+    public Text text;
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -64,6 +66,10 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButton("Jump") && !isCrouching)
             {
                 move_direction.y = Jump_height;
+                if (text != null && text.IsActive())
+                {
+                    SceneManager.LoadScene(0);
+                }
             }
             if (isCrouching) StartCoroutine(change_height(crouch_height));
             else StartCoroutine(change_height(originHeight));
@@ -103,4 +109,16 @@ public class PlayerMovement : MonoBehaviour
     public bool IsJumping { get { return isJumping; } }
     public bool IsRuning { get { return isRuning; } }
     public bool IsMoving { get { return isMoving; } }
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("1");
+        if (collision.gameObject.tag == "bounce")
+        {
+            move_direction.y = Jump_height * 2;
+            characterController.Move(Speed * Time.deltaTime * move_direction);
+            return;
+        }
+
+
+    }
 }
