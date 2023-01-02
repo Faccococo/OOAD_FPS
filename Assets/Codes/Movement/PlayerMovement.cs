@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isCrouching;
     private bool isJumping;
     private bool isWalking;
-    private AudioSource audioSource;
     private Animator character_animator;
+    private AudioSource audioSource;
 
     public float crouch_height;
     public float Speed;
@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Physics.autoSyncTransforms = false;
         isJumping = !characterController.isGrounded;
         isRuning = false;
         isMoving = false;
@@ -79,8 +80,8 @@ public class PlayerMovement : MonoBehaviour
             Physics.autoSyncTransforms = true;
             characterTransform.position = new Vector3(0, 0, 0);
         }
-        Debug.Log(characterTransform.position);
-        Debug.Log(time_floating);
+        //Debug.Log(characterTransform.position);
+        //Debug.Log(time_floating);
         time_floating += Time.deltaTime;
         move_direction.y -= 0.5f * Gravity * (Time.deltaTime + 2 * time_floating) * Time.deltaTime;
         
@@ -89,14 +90,22 @@ public class PlayerMovement : MonoBehaviour
         character_animator.SetBool("Walk", isMoving && !isRuning);
         character_animator.SetBool("Run", isRuning);
 
-        if (isMoving)
+        playSound();
+    }
+
+    public void playSound()
+    {
+        if (isMoving && !isJumping)
         {
-            audioSource.clip = isWalking? walkingSound:runingSound; 
-            audioSource.Play();
+            audioSource.clip = isWalking ? walkingSound : runingSound;
+            if (!audioSource.isPlaying)     audioSource.Play();
         }
         else
         {
-            audioSource.Pause();
+            if (audioSource.isPlaying)
+            {
+                audioSource.Pause();
+            }
         }
     }
 
@@ -111,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsMoving { get { return isMoving; } }
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("1");
+        //Debug.Log("1");
         if (collision.gameObject.tag == "bounce")
         {
             move_direction.y = Jump_height * 2;
