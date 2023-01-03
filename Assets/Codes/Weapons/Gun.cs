@@ -8,6 +8,7 @@ namespace Codes.Weapon
     {
         public Transform MuzzlePoint;
         public Transform CasingPoint;
+       
 
         public ParticleSystem MuzzleParticle;
         public GameObject Hit_Particial;
@@ -18,12 +19,13 @@ namespace Codes.Weapon
         public int Fire_Range;
         public float Fire_Rate;
         public PlayerMovement PM;
-        public Camera Gun_Camera;
+        
         public MouseLookAt mouseLook;
         public AnimationCurve Spread_Curve;//子弹散射曲线
         public float Spread;// 用于散射效果的减弱
         public GameObject GunIcon;
         public GameObject CrossUI;
+        public CameraChange cameraController;
 
         public AudioClip reloadAmmoLeftClip; // 换子弹音效1
         public AudioClip reloadOutOfAmmoLeftClip; // 换子弹音效1
@@ -31,6 +33,7 @@ namespace Codes.Weapon
         public AudioClip aimClip;
         public AudioClip startClip;
 
+        protected Transform ShootPoint;
         protected AudioSource audioSource;
         protected float currentSpreadTime; // 当前后坐力曲线曲线时间
         protected float SpreadAngel; //当前散射大小
@@ -39,15 +42,15 @@ namespace Codes.Weapon
         protected int Current_Max_Bullet;
         protected bool Aiming;
         protected float OriginCameraField;
-        
-        
+        protected Camera Gun_Camera;
 
         protected Animator GunAnimator;
         protected AnimatorStateInfo info;
 
-
         protected virtual void Start()
         {
+            Gun_Camera = cameraController.getMainCamera();
+            ShootPoint = Gun_Camera.transform;
             SpreadAngel = 0f;
             Current_Bullet_In_Mag = Mag_Capacity;
             Current_Max_Bullet = Total_Bullet;
@@ -59,8 +62,45 @@ namespace Codes.Weapon
             playStartSound();
         }
 
+        public void updateWeaponState()
+        {
+            Gun_Camera = cameraController.getMainCamera();
+            ShootPoint = Gun_Camera.transform;
+            Aiming = false;
+            info = GunAnimator.GetCurrentAnimatorStateInfo(0);
+            if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
+            {
+                playAimSound();
+            }
+            if (Input.GetKey(KeyCode.Mouse1) && isAllowedAiming())
+            {
+                Aiming = true;
+            }
+            UpdateAimState();
+            attack();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reload();
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                CheckWeapon();
+            }
+            UpdateUI();
+            if (isAiming() && Gun_Camera == cameraController.first_person_camera)
+            {
+                CrossUI.SetActive(false);
+            }
+            else
+            {
+                CrossUI.SetActive(true);
+            }
+            
+        }
+
         public void playStartSound()
         {
+            audioSource = GetComponent<AudioSource>();
             audioSource.clip = startClip;
             audioSource.Play();
         }
@@ -89,9 +129,10 @@ namespace Codes.Weapon
             Vector3 spread = Random.insideUnitCircle * SpreadAngel * Gun_Camera.fieldOfView * 0.005f;
             if (isAiming()) spread = spread * 0.1f;
             RaycastHit hit;
-            Vector3 shootDirection = MuzzlePoint.forward + spread;
+            Vector3 shootDirection = ShootPoint.forward + spread;
             //UnityEngine.Debug.Log(spread.x + " " + spread.y);
-            if (Physics.Raycast(MuzzlePoint.position, shootDirection, out hit, Fire_Range))
+            Vector3 shootPosition = new Vector3(ShootPoint.position.x, ShootPoint.position.y, ShootPoint.position.z - 0.6f);
+            if (Physics.Raycast(shootPosition, shootDirection, out hit, Fire_Range))
             {
                 hitOnObjects(hit);
             }
@@ -169,7 +210,7 @@ namespace Codes.Weapon
 
         protected void UpdateAimState()
         {
-            Gun_Camera.fieldOfView = Aiming ? 20 : OriginCameraField;
+            Gun_Camera.fieldOfView = Aiming ? 30 : OriginCameraField;
             GunAnimator.SetBool("Aim", Aiming);
         }
 
@@ -214,38 +255,7 @@ namespace Codes.Weapon
             }
         }
 
-        public void updateWeaponState()
-        {
-            Aiming = false;
-            info = GunAnimator.GetCurrentAnimatorStateInfo(0);
-            if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
-            {
-                playAimSound();
-            }
-            if (Input.GetKey(KeyCode.Mouse1) && isAllowedAiming())
-            {
-                Aiming = true;
-            }
-            UpdateAimState();
-            attack();
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Reload();
-            }
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                CheckWeapon();
-            }
-            UpdateUI();
-            if (isAiming())
-            {
-                CrossUI.SetActive(false);
-            }
-            else
-            {
-                CrossUI.SetActive(true);    
-            }
-        }
+        
         public Animator getAnimator()
         {
             return GunAnimator;

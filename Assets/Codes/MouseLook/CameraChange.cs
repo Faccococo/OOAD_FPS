@@ -6,11 +6,11 @@ public class CameraChange : MonoBehaviour
 {
     public Camera first_person_camera;
     public Camera third_person_camera;
-    private Camera main_camera;
 
     private void Start()
     {
-        main_camera = first_person_camera;
+        first_person_camera.enabled= true;
+        third_person_camera.enabled= false;
     }
 
     private void Update()
@@ -23,16 +23,12 @@ public class CameraChange : MonoBehaviour
 
     private void cameraSwap()
     {
-        Camera next_camera = (main_camera == first_person_camera) ? third_person_camera :               first_person_camera;
-        main_camera.GetComponent<AudioListener>().enabled = false;
-        main_camera.enabled = false;
-        main_camera = next_camera;
-        main_camera.GetComponent<AudioListener>().enabled = true;
-        main_camera.enabled = true;
+        first_person_camera.enabled = !first_person_camera.enabled;
+        third_person_camera.enabled = !third_person_camera.enabled;
     }
 
     public Camera getMainCamera()
     {
-        return main_camera;
+        return first_person_camera.enabled?first_person_camera:third_person_camera;
     }
 }

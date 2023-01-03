@@ -35,26 +35,24 @@ public class WeaponManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            carriedWeapon.gameObject.SetActive(false);
-            carriedWeapon.GunIcon.SetActive(false);
+            DeActivateCarriedWeapon();
             carriedWeapon = Main_Weapon;
-            carriedWeapon.gameObject.SetActive(true);
-            carriedWeapon.GunIcon.SetActive(true);
-            //carriedWeapon.playStartSound();
+            ActivateCarriedWeapon();
+            carriedWeapon.playStartSound();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             DeActivateCarriedWeapon();
             carriedWeapon = Secaondary_Weapon;
             ActivateCarriedWeapon();
-            //carriedWeapon.playStartSound();
+            carriedWeapon.playStartSound();
         }
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             DeActivateCarriedWeapon();
             changeWeapon();
             ActivateCarriedWeapon();
-            //carriedWeapon.playStartSound();
+            carriedWeapon.playStartSound();
         }
     }
 
