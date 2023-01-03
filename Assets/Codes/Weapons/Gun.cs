@@ -24,6 +24,7 @@ namespace Codes.Weapon
         public float Spread;// 用于散射效果的减弱
         public GameObject GunIcon;
         public GameObject CrossUI;
+        public float damage = 10f;
 
 
         protected float currentSpreadTime; // 当前后坐力曲线曲线时间
@@ -73,10 +74,15 @@ namespace Codes.Weapon
             if (isAiming()) spread = spread * 0.1f;
             RaycastHit hit;
             Vector3 shootDirection = MuzzlePoint.forward + spread;
-            UnityEngine.Debug.Log(spread.x + " " + spread.y);
+            //UnityEngine.Debug.Log(spread.x + " " + spread.y);
             if (Physics.Raycast(MuzzlePoint.position, shootDirection, out hit, Fire_Range))
             {
-                hitOnObjects(hit);
+                if (hit.collider.GetComponent<bool_control>() != null)
+                {
+                    hit.collider.GetComponent<bool_control>().hit(damage);
+                }
+                else hitOnObjects(hit);
+
             }
         }
 
@@ -142,7 +148,7 @@ namespace Codes.Weapon
             }
             else
             {
-                CrossUI.SetActive(true);    
+                CrossUI.SetActive(true);
             }
         }
         public abstract void attack();

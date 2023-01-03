@@ -54,7 +54,7 @@ public class AI : MonoBehaviour
 
     void Start()
     {
-        myself = GameObject.Find(name).transform;
+        myself = gameObject.transform;
         position = myself.transform.position;
         target = GameObject.FindWithTag("Player").transform;  //获取游戏中主角的位置，在我的工程里面主角的标签是Player
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -73,7 +73,7 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(position);
+        //Debug.Log(position);
         distance = (target.transform.position - myself.transform.position).magnitude;
         if (distance < beginhost_distance && thishostility>=hostility) {
             ishost = true;

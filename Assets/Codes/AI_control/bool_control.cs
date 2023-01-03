@@ -6,10 +6,10 @@ public class bool_control : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("血量控制")]
-    [SerializeField] [Tooltip("最大血量")] private float maxbool = 100f;
-    [SerializeField] [Tooltip("当前血量")] private float thisbool;
-    [SerializeField] [Tooltip("血量组件")] private RectTransform component;
-    [SerializeField] [Tooltip("组件变量")] private float val;
+    [SerializeField][Tooltip("最大血量")] private float maxbool = 100f;
+    [SerializeField][Tooltip("当前血量")] private float thisbool;
+    [SerializeField][Tooltip("血量组件")] private RectTransform component;
+    [SerializeField][Tooltip("组件变量")] private float val;
     private float b;
 
     void Start()
@@ -25,13 +25,18 @@ public class bool_control : MonoBehaviour
         v[0] = 3.0f * b;
         component.localScale = v;
         Vector2 v2 = component.anchoredPosition;
-        v2[0] = 0.001f+1.5f*(1f-b);
+        v2[0] = 0.001f + 1.5f * (1f - b);
         component.anchoredPosition = v2;
-        Debug.Log(component.anchoredPosition);
-        thisbool -= 10f * Time.deltaTime;
-        if (thisbool < 0) { thisbool = maxbool; }
+        //thisbool -= 10f * Time.deltaTime;
+        if (thisbool < 0)
+        {
+            gameObject.GetComponent<AI>().enabled = false;
+            Destroy(gameObject);
+        }
     }
-    void hit(float hitbool) {
+    public void hit(float hitbool)
+    {
         thisbool -= hitbool;
+        Debug.Log(thisbool);
     }
 }
