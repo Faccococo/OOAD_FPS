@@ -7,12 +7,12 @@ public class MouseLookAt : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
     private Transform characterTransform;
-    public float MouseSensity;
     private Vector3 camaraRotation;
     private float currentRecoilTime;
     private Vector2 currentRecoil;
     private CameraSpring cameraSpring;
 
+    public float MouseSensity;
     public Vector2 Rotate_Range;
     public AnimationCurve Recoil_Curve;
     public Vector2 Recoil_Range;

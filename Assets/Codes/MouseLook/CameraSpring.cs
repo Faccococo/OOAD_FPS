@@ -11,7 +11,6 @@ public class CameraSpring : MonoBehaviour
     public Vector2 Min_Recoil_Range;
     public Vector2 Max_Recoil_Range;
     public int Motion_Intensity;
-    public WeaponManager weaponManager;
 
     private CameraSpringUtil cameraSpringUtil;
     private Transform cameraSpringTransform;

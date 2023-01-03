@@ -28,6 +28,11 @@ public class WeaponManager : MonoBehaviour
     }
     private void SwapWeapon()
     {
+        if (carriedWeapon.isReloading())
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             carriedWeapon.gameObject.SetActive(false);
