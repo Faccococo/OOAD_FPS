@@ -8,6 +8,7 @@ public class OOADFPS : Architecture<OOADFPS>
     {
         RegisterModel<IGameModel>(new GameModels());
         RegisterModel<IGameAudioModel>(new GameAudioModel());
+        RegisterModel<IPauseModel>(new PauseModel());
         RegisterSystem<ITimerSystem>(new TimerSystem());
         RegisterSystem<ICameraSystem>(new CameraSystem());
         RegisterSystem<IAudioMgrSystem>(new AudioMgrSystem());

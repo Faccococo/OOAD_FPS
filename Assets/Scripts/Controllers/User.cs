@@ -12,6 +12,8 @@ public class User : OOADFPSController
     // Start is called before the first frame update
     void Start()
     {
+        panelController.transform.SetAsLastSibling();
+        panelController.updateMode = AnimatorUpdateMode.UnscaledTime;
         isOpen = false;
         isClose = false;
         panelController.SetBool("open", false);
@@ -32,20 +34,22 @@ public class User : OOADFPSController
                 panelController.SetBool("open", false);
                 panelController.SetBool("close", true);
                 audioMgr.PlaySound("CloseSetting");
+                this.GetModel<IPauseModel>().IsPause.Value = false;
+
             }
             else if (isOpen == false && isClose == true)
             {
                 panelController.SetBool("open", true);
                 panelController.SetBool("close", false);
                 audioMgr.PlaySound("OpenSetting");
-                Time.timeScale = 1;
+                this.GetModel<IPauseModel>().IsPause.Value = true;
             }
             else if (isOpen == false && isClose == false)
             {
                 panelController.SetBool("open", true);
                 panelController.SetBool("close", false);
                 audioMgr.PlaySound("OpenSetting");
-                Time.timeScale = 1;
+                this.GetModel<IPauseModel>().IsPause.Value = true;
             }
         }
         //if (isOpen == true && isClose == false)

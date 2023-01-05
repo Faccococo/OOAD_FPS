@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using QFramework;
+using static OOADFPS;
 
 namespace Codes.Weapon
 {
-    public abstract class Gun : MonoBehaviour, Weapon
+    public abstract class Gun : OOADFPSController, Weapon
     {
         public Transform MuzzlePoint;
         public Transform CasingPoint;
@@ -216,6 +218,11 @@ namespace Codes.Weapon
 
         public void updateWeaponState()
         {
+            if (this.GetModel<IPauseModel>().IsPause.Value == true)
+            {
+                return;
+            }
+            Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
             Aiming = false;
             info = GunAnimator.GetCurrentAnimatorStateInfo(0);
             if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())

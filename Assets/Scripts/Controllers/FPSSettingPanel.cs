@@ -24,6 +24,7 @@ public class FPSSettingPanel : OOADFPS.OOADFPSController
         gameObject.GetComponent<Animator>().SetBool("open", false);
         gameObject.GetComponent<Animator>().SetBool("close", true);
         this.GetSystem<IAudioMgrSystem>().PlaySound("CloseSetting");
+        this.GetModel<IPauseModel>().IsPause.Value = false;
     }
 
     private void OnBGMValueChanged(float value)

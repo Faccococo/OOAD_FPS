@@ -1,9 +1,11 @@
 using Codes.Weapon;
+using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OOADFPS;
 
-public class MouseLookAt : MonoBehaviour
+public class MouseLookAt : OOADFPSController
 {
     [SerializeField] private Transform cameraTransform;
     private Transform characterTransform;
@@ -19,7 +21,6 @@ public class MouseLookAt : MonoBehaviour
     public float Recoil_Fade_Out_Time;
     public WeaponManager weaponManager;
 
-
     void Start()
     {
         characterTransform= transform;
@@ -29,6 +30,16 @@ public class MouseLookAt : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
+        if (this.GetModel<IPauseModel>().IsPause.Value == true)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            return;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         var inputX = Input.GetAxis("Mouse X");
         var inputY = Input.GetAxis("Mouse Y");
 

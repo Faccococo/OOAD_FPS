@@ -2,8 +2,10 @@ using Codes.Weapon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QFramework;
+using static OOADFPS;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : OOADFPSController
 {
     public Gun Main_Weapon;
     public Gun Secaondary_Weapon;
@@ -18,6 +20,11 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
+        //if (this.GetModel<IPauseModel>().IsPause.Value == true)
+        //{
+        //    return;
+        //}
         carriedWeapon.updateWeaponState();
         SwapWeapon();
     }
