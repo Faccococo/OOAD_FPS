@@ -227,8 +227,8 @@ MonoBehaviour:
   runtime: 3
   runspeed: 6
   runcost: 20
-  beginhost_distance: 25
-  keephost_distance: 35
+  beginhost_distance: 15
+  keephost_distance: 20
   attract_distance: 10
   ishost: 0
   iskeephost: 0

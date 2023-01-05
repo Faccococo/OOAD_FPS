@@ -26,8 +26,8 @@ public class AI : MonoBehaviour
     [SerializeField] [Tooltip("消耗能量")] private float runcost = 20;
 
     [Header("寻路设置属性")]
-    [SerializeField] [Tooltip("激活距离")] private float beginhost_distance = 25f;
-    [SerializeField] [Tooltip("追击距离")] private float keephost_distance = 35f;
+    [SerializeField] [Tooltip("激活距离")] private float beginhost_distance = 15f;
+    [SerializeField] [Tooltip("追击距离")] private float keephost_distance = 20f;
     [SerializeField] [Tooltip("游击距离")] private float attract_distance = 10f;
     [Header("自身属性状态显示（不可修改）")]
     [SerializeField] [Tooltip("是否激活")] private bool ishost;
