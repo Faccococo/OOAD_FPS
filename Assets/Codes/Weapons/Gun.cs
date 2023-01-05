@@ -222,7 +222,6 @@ namespace Codes.Weapon
             {
                 return;
             }
-            Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
             Aiming = false;
             info = GunAnimator.GetCurrentAnimatorStateInfo(0);
             if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
