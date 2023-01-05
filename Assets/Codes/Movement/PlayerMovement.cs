@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         characterTransform = transform;
         originHeight = characterController.height;
         time_floating = 0;
-        character_animator = weapon.Main_Weapon.getAnimator();
+        //character_animator = weapon.getCarriedWeapon().getAnimator();
     }
 
     private void Update()
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         isMoving = false;
         isCrouching = false;
         isWalking= false;
-        character_animator = weapon.Main_Weapon.getAnimator();
+        character_animator = weapon.getCarriedWeapon().getAnimator();
 
         if (!isJumping)
         {

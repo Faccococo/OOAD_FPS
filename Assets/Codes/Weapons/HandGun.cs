@@ -13,13 +13,6 @@ namespace Codes.Weapon
         public Text Current_Max_Bullet_UI;
         public Text Weapon_Name;
 
-
-
-        protected override void Start()
-        {
-            base.Start();
-        }
-
         public override void attack()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
