@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu 3D Failure.unity
     guid: 4668ae7f37779a0478145fa9dedb5c4b
+  - enabled: 1
+    path: Assets/Scenes/Menu 3D Survive.unity
+    guid: 6882cf8014ffafe44b1d1a0c2af3e764
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb07e2d669e9c94e9d7d3c782a916f7,
       type: 2}

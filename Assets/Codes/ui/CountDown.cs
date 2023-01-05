@@ -31,7 +31,7 @@ public class CountDown : MonoBehaviour
                 // 取消调用
                 CancelInvoke("Timer");
                 Cursor.lockState = CursorLockMode.None;
-                SceneManager.LoadScene(11);
+                SceneManager.LoadScene(12);
             }
         }
     }

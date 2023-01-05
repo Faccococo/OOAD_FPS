@@ -8,7 +8,7 @@ namespace Codes.Weapon
     {
         public Transform MuzzlePoint;
         public Transform CasingPoint;
-       
+
 
         public ParticleSystem MuzzleParticle;
         public GameObject Hit_Particial;
@@ -20,7 +20,7 @@ namespace Codes.Weapon
         public float Fire_Rate;
         public float Damage = 10f;
         public PlayerMovement PM;
-        
+
         public MouseLookAt mouseLook;
         public AnimationCurve Spread_Curve;//子弹散射曲线
         public float Spread;// 用于散射效果的减弱
@@ -96,7 +96,7 @@ namespace Codes.Weapon
             {
                 CrossUI.SetActive(true);
             }
-            
+
         }
 
         public void playStartSound()
@@ -170,7 +170,7 @@ namespace Codes.Weapon
         }
         protected void PlayFireSound()
         {
-            audioSource.clip = fireClip; 
+            audioSource.clip = fireClip;
             audioSource.Play();
         }
         protected void PlayFireAnimation()
@@ -268,7 +268,17 @@ namespace Codes.Weapon
             }
         }
 
-        
+        public void setBulletInMag(int bullet_num)
+        {
+            Current_Bullet_In_Mag = bullet_num;
+        }
+
+        public int getMagCapacity()
+        {
+            return Mag_Capacity;
+        }
+
+
         public Animator getAnimator()
         {
             return GunAnimator;
