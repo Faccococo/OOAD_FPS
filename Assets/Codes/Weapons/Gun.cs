@@ -139,7 +139,8 @@ namespace Codes.Weapon
             RaycastHit hit;
             Vector3 shootDirection = ShootPoint.forward + spread;
             //UnityEngine.Debug.Log(spread.x + " " + spread.y);
-            Vector3 shootPosition = ShootPoint.position + 0.8f * ShootPoint.forward.normalized;
+            Vector3 shootPosition = ShootPoint.position + 1.2f * ShootPoint.forward.normalized;
+            //shootPosition.y -= 0.3f;
             if (Physics.Raycast(shootPosition, shootDirection, out hit, Fire_Range))
             {
                 if (hit.collider.GetComponent<bool_control>() != null)
