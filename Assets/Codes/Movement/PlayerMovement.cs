@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using QFramework;
+using static OOADFPS;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : OOADFPSController
 {
     private CharacterController characterController;
     private Transform characterTransform;
@@ -44,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        //if (this.GetModel<IPauseModel>().IsPause.Value == true)
+        //{
+        //    return;
+        //}
         Physics.autoSyncTransforms = false;
         isJumping = !characterController.isGrounded;
         isRuning = false;

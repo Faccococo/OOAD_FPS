@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using QFramework;
+using static OOADFPS;
 
 namespace Codes.Weapon
 {
-    public abstract class Gun : MonoBehaviour, Weapon
+    public abstract class Gun : OOADFPSController, Weapon
     {
         public Transform MuzzlePoint;
         public Transform CasingPoint;
@@ -22,22 +24,22 @@ namespace Codes.Weapon
         public PlayerMovement PM;
         
         public MouseLookAt mouseLook;
-        public AnimationCurve Spread_Curve;//×Óµ¯É¢ÉäÇúÏß
-        public float Spread;// ÓÃÓÚÉ¢ÉäÐ§¹ûµÄ¼õÈõ
+        public AnimationCurve Spread_Curve;//ï¿½Óµï¿½É¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        public float Spread;// ï¿½ï¿½ï¿½ï¿½É¢ï¿½ï¿½Ð§ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
         public GameObject GunIcon;
         public GameObject CrossUI;
         public CameraChange cameraController;
 
-        public AudioClip reloadAmmoLeftClip; // »»×Óµ¯ÒôÐ§1
-        public AudioClip reloadOutOfAmmoLeftClip; // »»×Óµ¯ÒôÐ§1
+        public AudioClip reloadAmmoLeftClip; // ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ð§1
+        public AudioClip reloadOutOfAmmoLeftClip; // ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ð§1
         public AudioClip fireClip;
         public AudioClip aimClip;
         public AudioClip startClip;
 
         protected Transform ShootPoint;
         protected AudioSource audioSource;
-        protected float currentSpreadTime; // µ±Ç°ºó×øÁ¦ÇúÏßÇúÏßÊ±¼ä
-        protected float SpreadAngel; //µ±Ç°É¢Éä´óÐ¡
+        protected float currentSpreadTime; // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+        protected float SpreadAngel; //ï¿½ï¿½Ç°É¢ï¿½ï¿½ï¿½Ð¡
         protected float Last_Fire_Time;
         protected int Current_Bullet_In_Mag;
         protected int Current_Max_Bullet;
@@ -118,7 +120,7 @@ namespace Codes.Weapon
 
         protected void hitOnObjects(RaycastHit hit)
         {
-            GameObject hitParticleEffect = Instantiate(Hit_Particial, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)); //´´Ôì»ð¹âÌØÐ§
+            GameObject hitParticleEffect = Instantiate(Hit_Particial, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
             GameObject bulletHoleEffect = Instantiate(Bullet_Hole, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
 
             Destroy(bulletHoleEffect, 3f);
@@ -257,7 +259,7 @@ namespace Codes.Weapon
 
         public bool isReloading()
         {
-            //Á½ÖÖ»»×Óµ¯¶¯»­
+            //ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
             if (info.IsName("Reload Out Of Ammo") || info.IsName("Reload Ammo Left"))
             {
                 return true;
@@ -268,7 +270,38 @@ namespace Codes.Weapon
             }
         }
 
-        
+        public void updateWeaponState()
+        {
+            Aiming = false;
+            info = GunAnimator.GetCurrentAnimatorStateInfo(0);
+            if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
+            {
+                playAimSound();
+            }
+            if (Input.GetKey(KeyCode.Mouse1) && isAllowedAiming())
+            {
+                Aiming = true;
+            }
+            UpdateAimState();
+            attack();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reload();
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                CheckWeapon();
+            }
+            UpdateUI();
+            if (isAiming())
+            {
+                CrossUI.SetActive(false);
+            }
+            else
+            {
+                CrossUI.SetActive(true);    
+            }
+        }
         public Animator getAnimator()
         {
             return GunAnimator;
