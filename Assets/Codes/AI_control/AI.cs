@@ -57,14 +57,9 @@ public class AI : MonoBehaviour
     public CharacterController characterController;
 
 
-
-
-
-
-
     void Start()
     {
-        myself = GameObject.Find(name).transform;
+        myself = gameObject.transform;
         position = myself.transform.position;
         target = GameObject.Find("Player").transform;  //获取游戏中主角的位置，在我的工程里面主角的标签是Player
         characterController = GameObject.Find("Player").GetComponent<CharacterController>();
