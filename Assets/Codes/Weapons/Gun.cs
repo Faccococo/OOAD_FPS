@@ -270,38 +270,6 @@ namespace Codes.Weapon
             }
         }
 
-        public void updateWeaponState()
-        {
-            Aiming = false;
-            info = GunAnimator.GetCurrentAnimatorStateInfo(0);
-            if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
-            {
-                playAimSound();
-            }
-            if (Input.GetKey(KeyCode.Mouse1) && isAllowedAiming())
-            {
-                Aiming = true;
-            }
-            UpdateAimState();
-            attack();
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Reload();
-            }
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                CheckWeapon();
-            }
-            UpdateUI();
-            if (isAiming())
-            {
-                CrossUI.SetActive(false);
-            }
-            else
-            {
-                CrossUI.SetActive(true);    
-            }
-        }
         public Animator getAnimator()
         {
             return GunAnimator;
