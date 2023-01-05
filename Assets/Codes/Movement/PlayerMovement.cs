@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isWalking;
     private Animator character_animator;
     private AudioSource audioSource;
+    private Vector3 Born_Position;
 
     public float crouch_height;
     public float Speed;
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public Text text;
     private void Start()
     {
+        Born_Position = transform.position;
         audioSource = GetComponent<AudioSource>();
         characterController= GetComponent<CharacterController>();
         characterTransform = transform;
@@ -78,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         if (time_floating >= resetTime)
         {
             Physics.autoSyncTransforms = true;
-            characterTransform.position = new Vector3(0, 0, 0);
+            characterTransform.position = Born_Position;
         }
         //Debug.Log(characterTransform.position);
         //Debug.Log(time_floating);

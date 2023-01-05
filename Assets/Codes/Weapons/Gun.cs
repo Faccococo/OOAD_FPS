@@ -18,6 +18,7 @@ namespace Codes.Weapon
         public int Total_Bullet;
         public int Fire_Range;
         public float Fire_Rate;
+        public float Damage = 10f;
         public PlayerMovement PM;
         
         public MouseLookAt mouseLook;
@@ -124,6 +125,11 @@ namespace Codes.Weapon
             Destroy(hitParticleEffect, 1f);
         }
 
+        protected void hitOnEnemy(RaycastHit hit)
+        {
+            hit.collider.GetComponent<bool_control>().hit(Damage);
+        }
+
         protected void doShoot()
         {
             Vector3 spread = Random.insideUnitCircle * SpreadAngel * Gun_Camera.fieldOfView * 0.005f;
@@ -131,10 +137,17 @@ namespace Codes.Weapon
             RaycastHit hit;
             Vector3 shootDirection = ShootPoint.forward + spread;
             //UnityEngine.Debug.Log(spread.x + " " + spread.y);
-            Vector3 shootPosition = new Vector3(ShootPoint.position.x, ShootPoint.position.y, ShootPoint.position.z - 0.6f);
+            Vector3 shootPosition = ShootPoint.position + 0.8f * ShootPoint.forward.normalized;
             if (Physics.Raycast(shootPosition, shootDirection, out hit, Fire_Range))
             {
-                hitOnObjects(hit);
+                if (hit.collider.GetComponent<bool_control>() != null)
+                {
+                    hitOnEnemy(hit);
+                }
+                else
+                {
+                    hitOnObjects(hit);
+                }
             }
         }
 
