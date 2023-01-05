@@ -5,14 +5,16 @@ using UnityEngine;
 
 public class MouseLookAt : MonoBehaviour
 {
-    [SerializeField] private Transform cameraTransform;
+    public CameraChange cameraController;
+    private Transform cameraTransform;
     private Transform characterTransform;
-    public float MouseSensity;
     private Vector3 camaraRotation;
     private float currentRecoilTime;
     private Vector2 currentRecoil;
     private CameraSpring cameraSpring;
+    private Camera camera_now;
 
+    public float MouseSensity;
     public Vector2 Rotate_Range;
     public AnimationCurve Recoil_Curve;
     public Vector2 Recoil_Range;
@@ -22,13 +24,16 @@ public class MouseLookAt : MonoBehaviour
 
     void Start()
     {
-        characterTransform= transform;
+        cameraTransform = cameraController.getMainCamera().transform;
+        characterTransform = transform;
         Cursor.lockState = CursorLockMode.Locked;
         cameraSpring = GetComponentInChildren<CameraSpring>();
     }
 
     void Update()
     {
+        camera_now = cameraController.getMainCamera();
+        cameraTransform = camera_now.transform;
         var inputX = Input.GetAxis("Mouse X");
         var inputY = Input.GetAxis("Mouse Y");
 
@@ -36,7 +41,8 @@ public class MouseLookAt : MonoBehaviour
         camaraRotation.y += inputX * MouseSensity * 0.01f;
 
         camaraRotation.x = Mathf.Clamp(camaraRotation.x, Rotate_Range.x, Rotate_Range.y);
-        cameraTransform.rotation = Quaternion.Euler(camaraRotation.x, camaraRotation.y, 0);
+        if (camera_now == cameraController.first_person_camera)
+            cameraTransform.rotation = Quaternion.Euler(camaraRotation.x, camaraRotation.y, 0);
         characterTransform.rotation = Quaternion.Euler(camaraRotation.x, camaraRotation.y, 0);
 
         CalculateRecoilOffset();

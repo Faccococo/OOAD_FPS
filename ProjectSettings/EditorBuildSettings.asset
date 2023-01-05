@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/littlepark.unity
     guid: 9281df55f3f96d3469f1b6ed4b26e93d
   - enabled: 1
-    path: Assets/Scenes/Colonial_graveyard.unity
+    path: Assets/Scenes/grave.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/forest.unity
@@ -20,6 +20,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu 3D.unity
     guid: fa0913115ac1d4fba8b9d10280f4b04d
+  - enabled: 1
+    path: Assets/online-Scene/SampleScene_online.unity
+    guid: 22d2af8dfd9acb24091cc85ee4f34f53
+  - enabled: 1
+    path: Assets/online-Scene/littlepark_online.unity
+    guid: 510493723d9679f4fbcaff2d24720192
+  - enabled: 1
+    path: Assets/online-Scene/grave_online.unity
+    guid: 3b4fc2b534c3fac41bcd3ccef65959b4
+  - enabled: 1
+    path: Assets/online-Scene/forest_online.unity
+    guid: 29cd68207af3dc341b83a6b529a59e2b
+  - enabled: 1
+    path: Assets/Scenes/Menu 3D Win.unity
+    guid: a34c6f39592be944ca00a5f218c06d20
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb07e2d669e9c94e9d7d3c782a916f7,
       type: 2}
