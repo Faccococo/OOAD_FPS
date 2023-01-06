@@ -10033,7 +10033,7 @@ Transform:
   - {fileID: 1638830747599074195}
   - {fileID: 4781216926042895882}
   m_Father: {fileID: 2080842001683939609}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6366637766607020815
 Animator:
@@ -11151,7 +11151,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3171225947599207179}
-  - {fileID: 7555859107143397312}
   - {fileID: 6292640940787504049}
   m_Father: {fileID: 4440740711080537966}
   m_RootOrder: 0
@@ -11486,6 +11485,7 @@ Transform:
   - {fileID: 2080842001683939609}
   - {fileID: 26258771569099601}
   - {fileID: 6589820015202100078}
+  - {fileID: 7555859107143397312}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11629,7 +11629,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.4
+  m_Radius: 1.01
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -32859,8 +32859,8 @@ RectTransform:
   - {fileID: 8174987811802864959}
   - {fileID: 3335009171733306971}
   - {fileID: 4724980598119407119}
-  m_Father: {fileID: 2080842001683939609}
-  m_RootOrder: 1
+  m_Father: {fileID: 4440740711080537966}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
