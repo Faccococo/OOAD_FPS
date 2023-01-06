@@ -18,6 +18,6 @@ public class Online : MonoBehaviour
     }
     public void OnClick()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(12);
     }
 }
