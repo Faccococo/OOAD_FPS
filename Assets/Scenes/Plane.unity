@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b2492641d219174998ba65968c4eebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  second: 40
+  second: 120
 --- !u!114 &108854027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25758,7 +25758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5acd72e8bfa31488d62e9a4eecf7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLives: 2
+  maxLives: 3
   cur_lives: {fileID: 821001099}
 --- !u!1 &2237390772876058192
 GameObject:

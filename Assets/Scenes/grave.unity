@@ -13739,6 +13739,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a71f0d6bca31a3445a8b967f7177a970, type: 3}
+--- !u!1 &1649048154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4740278249460642522, guid: a71f0d6bca31a3445a8b967f7177a970,
+    type: 3}
+  m_PrefabInstance: {fileID: 1649048153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1649048155 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6828604528584143285, guid: a71f0d6bca31a3445a8b967f7177a970,
+    type: 3}
+  m_PrefabInstance: {fileID: 1649048153}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1652542462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14866,8 +14878,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435d6866bfdb1314e9f0d37e8f32c9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelController: {fileID: 0}
-  target: {fileID: 0}
+  panelController: {fileID: 1649048155}
+  target: {fileID: 1649048154}
   icon: {fileID: 1051642988}
   isOpen: 0
   isClose: 0

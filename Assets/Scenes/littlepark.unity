@@ -8025,8 +8025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435d6866bfdb1314e9f0d37e8f32c9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelController: {fileID: 0}
-  target: {fileID: 0}
+  panelController: {fileID: 890832615}
+  target: {fileID: 890832614}
   icon: {fileID: 61750394}
   isOpen: 0
   isClose: 0
@@ -35667,6 +35667,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a71f0d6bca31a3445a8b967f7177a970, type: 3}
+--- !u!1 &890832614 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4740278249460642522, guid: a71f0d6bca31a3445a8b967f7177a970,
+    type: 3}
+  m_PrefabInstance: {fileID: 890832613}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &890832615 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6828604528584143285, guid: a71f0d6bca31a3445a8b967f7177a970,
+    type: 3}
+  m_PrefabInstance: {fileID: 890832613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &891329554
 PrefabInstance:
   m_ObjectHideFlags: 0
