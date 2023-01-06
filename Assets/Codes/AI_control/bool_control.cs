@@ -37,5 +37,6 @@ public class bool_control : MonoBehaviour
     public void hit(float hitbool)
     {
         thisbool -= hitbool;
+        Debug.Log(thisbool);
     }
 }

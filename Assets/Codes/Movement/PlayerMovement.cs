@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using QFramework;
-using static OOADFPS;
 
-public class PlayerMovement : OOADFPSController
+public class PlayerMovement : MonoBehaviour
 {
     private CharacterController characterController;
     private Transform characterTransform;
@@ -37,7 +35,7 @@ public class PlayerMovement : OOADFPSController
     {
         Born_Position = transform.position;
         audioSource = GetComponent<AudioSource>();
-        characterController = GetComponent<CharacterController>();
+        characterController= GetComponent<CharacterController>();
         characterTransform = transform;
         originHeight = characterController.height;
         time_floating = 0;
@@ -46,16 +44,12 @@ public class PlayerMovement : OOADFPSController
 
     private void Update()
     {
-        //if (this.GetModel<IPauseModel>().IsPause.Value == true)
-        //{
-        //    return;
-        //}
         Physics.autoSyncTransforms = false;
         isJumping = !characterController.isGrounded;
         isRuning = false;
         isMoving = false;
         isCrouching = false;
-        isWalking = false;
+        isWalking= false;
         character_animator = weapon.getCarriedWeapon().getAnimator();
 
         if (!isJumping)
@@ -63,7 +57,7 @@ public class PlayerMovement : OOADFPSController
             isMoving = (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0);
             isRuning = Input.GetKey(KeyCode.LeftShift) && isMoving;
             isCrouching = Input.GetKey(KeyCode.LeftControl);
-            isWalking = !isRuning && isMoving;
+            isWalking = !isRuning&& isMoving;
 
             time_floating = 0;
             float walk_speed = isRuning ? 2f : 1f;
@@ -87,17 +81,12 @@ public class PlayerMovement : OOADFPSController
         {
             Physics.autoSyncTransforms = true;
             characterTransform.position = Born_Position;
-            Debug.Log(time_floating);
-            if (gameObject.GetComponent<LivesController>() != null)
-            {
-                gameObject.GetComponent<LivesController>().reduceLives();
-            }
         }
         //Debug.Log(characterTransform.position);
         //Debug.Log(time_floating);
         time_floating += Time.deltaTime;
         move_direction.y -= 0.5f * Gravity * (Time.deltaTime + 2 * time_floating) * Time.deltaTime;
-
+        
         characterController.Move(Speed * Time.deltaTime * move_direction);
 
         character_animator.SetBool("Walk", isMoving && !isRuning);
@@ -111,7 +100,7 @@ public class PlayerMovement : OOADFPSController
         if (isMoving && !isJumping)
         {
             audioSource.clip = isWalking ? walkingSound : runingSound;
-            if (!audioSource.isPlaying) audioSource.Play();
+            if (!audioSource.isPlaying)     audioSource.Play();
         }
         else
         {
@@ -122,13 +111,12 @@ public class PlayerMovement : OOADFPSController
         }
     }
 
-    public IEnumerator change_height(float target_height)
-    {
+    public IEnumerator change_height(float target_height) {
         float current_height = 0f;
         characterController.height = Mathf.SmoothDamp(characterController.height, target_height, ref current_height, Time.deltaTime);
         yield return null;
     }
-    public bool reburn { get { return time_floating >= resetTime; } }
+        
     public bool IsJumping { get { return isJumping; } }
     public bool IsRuning { get { return isRuning; } }
     public bool IsMoving { get { return isMoving; } }
@@ -141,5 +129,7 @@ public class PlayerMovement : OOADFPSController
             characterController.Move(Speed * Time.deltaTime * move_direction);
             return;
         }
+
+
     }
 }
