@@ -33,6 +33,7 @@ public class MouseLookAt : OOADFPSController
 
     void Update()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         camera_now = cameraController.getMainCamera();
         cameraTransform = camera_now.transform;
         

@@ -5,9 +5,11 @@ using static OOADFPS;
 public class User : OOADFPSController
 {
     public Animator panelController;
+    public GameObject target, icon;
     public bool isOpen, isClose;
     private IObjectPoolSystem objectPool;
     private IAudioMgrSystem audioMgr;
+    private Transform mTarget;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,9 @@ public class User : OOADFPSController
         panelController.SetBool("close", false);
         objectPool = this.GetSystem<IObjectPoolSystem>();
         audioMgr = this.GetSystem<IAudioMgrSystem>();
+        audioMgr.PlayBgm("bgm");
+        mTarget = GameObject.FindGameObjectWithTag("Player").transform;
+        this.GetModel<IPauseModel>().IsPause.Value = false;
     }
 
     // Update is called once per frame
@@ -52,13 +57,11 @@ public class User : OOADFPSController
                 this.GetModel<IPauseModel>().IsPause.Value = true;
             }
         }
-        //if (isOpen == true && isClose == false)
-        //{
-        //    AnimatorStateInfo info = panelController.GetCurrentAnimatorStateInfo(0);
-        //    if (info.normalizedTime > 1.0f && info.IsName("Open"))
-        //    {
-        //        Time.timeScale = 0;
-        //    }
-        //}
+    }
+
+    private void LateUpdate()
+    {
+        icon.transform.localPosition = new Vector3(mTarget.position.x, icon.transform.position.y, mTarget.position.z);
+        icon.transform.localRotation = Quaternion.Euler(-90, 0, 90 + target.transform.eulerAngles.y);
     }
 }

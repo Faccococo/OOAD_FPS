@@ -67,6 +67,10 @@ namespace Codes.Weapon
 
         public void updateWeaponState()
         {
+            if (this.GetModel<IPauseModel>().IsPause.Value == true)
+            {
+                return;
+            }
             Gun_Camera = cameraController.getMainCamera();
             ShootPoint = Gun_Camera.transform;
             Aiming = false;
@@ -139,7 +143,7 @@ namespace Codes.Weapon
             RaycastHit hit;
             Vector3 shootDirection = ShootPoint.forward + spread;
             //UnityEngine.Debug.Log(spread.x + " " + spread.y);
-            Vector3 shootPosition = ShootPoint.position + 1.2f * ShootPoint.forward.normalized;
+            Vector3 shootPosition = ShootPoint.position + 2.6f * ShootPoint.forward.normalized;
             //shootPosition.y -= 0.3f;
             if (Physics.Raycast(shootPosition, shootDirection, out hit, Fire_Range))
             {

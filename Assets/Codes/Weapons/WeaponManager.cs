@@ -21,10 +21,10 @@ public class WeaponManager : OOADFPSController
     private void Update()
     {
         //Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
-        //if (this.GetModel<IPauseModel>().IsPause.Value == true)
-        //{
-        //    return;
-        //}
+        if (this.GetModel<IPauseModel>().IsPause.Value == true)
+        {
+            return;
+        }
         carriedWeapon.updateWeaponState();
         SwapWeapon();
     }
