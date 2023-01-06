@@ -68597,7 +68597,7 @@ PrefabInstance:
     - target: {fileID: 3471643305006496069, guid: feb46b78f78e74267836b445901cf537,
         type: 3}
       propertyPath: bouncingBox
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3471643305006496069, guid: feb46b78f78e74267836b445901cf537,
         type: 3}

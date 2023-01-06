@@ -23,7 +23,5 @@ public class ParkWin : MonoBehaviour
         if (collision.gameObject.tag == "Player") {
             SceneManager.LoadScene(2);
         }
-
-
     }
 }
