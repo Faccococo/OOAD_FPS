@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class AI : MonoBehaviour
 {
     [Header("本体属性设置")]
-    [SerializeField] [Tooltip("自身名称")] private string name = "enemy";     //敌人名字
     [SerializeField] [Tooltip("自身能量")] private float energy = 100f;    //自己的体力属性上限
     [SerializeField] [Tooltip("自身追击时间")] private float hostility = 5f;
     [SerializeField] [Tooltip("能量恢复速度")] private float energy_increase = 35f;
