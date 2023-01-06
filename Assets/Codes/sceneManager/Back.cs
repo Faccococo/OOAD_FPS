@@ -14,7 +14,7 @@ public class Back : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Cursor.lockState = CursorLockMode.None;
     }
     public void OnClick()
     {
