@@ -79,7 +79,6 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(position);
         distance = (target.transform.position - myself.transform.position).magnitude;
         if (distance < beginhost_distance && thishostility>=hostility) {
             ishost = true;

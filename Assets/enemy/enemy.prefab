@@ -225,7 +225,7 @@ MonoBehaviour:
   isrun: 0
   runrate: 0
   runtime: 3
-  runspeed: 6
+  runspeed: 200
   runcost: 20
   beginhost_distance: 15
   keephost_distance: 20
@@ -242,7 +242,7 @@ MonoBehaviour:
   hittedspend: 30
   hittedhigh: 1
   thishittedtime: 0
-  MoveSpeed: 2.5
+  MoveSpeed: 100
   characterController: {fileID: 0}
 --- !u!114 &6406430485723538072
 MonoBehaviour:
