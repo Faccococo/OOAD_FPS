@@ -11,6 +11,7 @@ namespace Codes.Weapon
         public Transform MuzzlePoint;
         public Transform CasingPoint;
 
+
         public ParticleSystem MuzzleParticle;
         public GameObject Hit_Particial;
         public GameObject Bullet_Hole;
@@ -19,37 +20,40 @@ namespace Codes.Weapon
         public int Total_Bullet;
         public int Fire_Range;
         public float Fire_Rate;
+        public float Damage = 10f;
         public PlayerMovement PM;
-        public Camera Gun_Camera;
+
         public MouseLookAt mouseLook;
-        public AnimationCurve Spread_Curve;//×Óµ¯É¢ÉäÇúÏß
-        public float Spread;// ÓÃÓÚÉ¢ÉäÐ§¹ûµÄ¼õÈõ
+        public AnimationCurve Spread_Curve;//ï¿½Óµï¿½É¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        public float Spread;// ï¿½ï¿½ï¿½ï¿½É¢ï¿½ï¿½Ð§ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
         public GameObject GunIcon;
         public GameObject CrossUI;
+        public CameraChange cameraController;
 
-        public AudioClip reloadAmmoLeftClip; // »»×Óµ¯ÒôÐ§1
-        public AudioClip reloadOutOfAmmoLeftClip; // »»×Óµ¯ÒôÐ§1
+        public AudioClip reloadAmmoLeftClip; // ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ð§1
+        public AudioClip reloadOutOfAmmoLeftClip; // ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½Ð§1
         public AudioClip fireClip;
         public AudioClip aimClip;
         public AudioClip startClip;
 
+        protected Transform ShootPoint;
         protected AudioSource audioSource;
-        protected float currentSpreadTime; // µ±Ç°ºó×øÁ¦ÇúÏßÇúÏßÊ±¼ä
-        protected float SpreadAngel; //µ±Ç°É¢Éä´óÐ¡
+        protected float currentSpreadTime; // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+        protected float SpreadAngel; //ï¿½ï¿½Ç°É¢ï¿½ï¿½ï¿½Ð¡
         protected float Last_Fire_Time;
         protected int Current_Bullet_In_Mag;
         protected int Current_Max_Bullet;
         protected bool Aiming;
         protected float OriginCameraField;
-        
-        
+        protected Camera Gun_Camera;
 
         protected Animator GunAnimator;
         protected AnimatorStateInfo info;
 
-
         protected virtual void Start()
         {
+            Gun_Camera = cameraController.getMainCamera();
+            ShootPoint = Gun_Camera.transform;
             SpreadAngel = 0f;
             Current_Bullet_In_Mag = Mag_Capacity;
             Current_Max_Bullet = Total_Bullet;
@@ -61,8 +65,49 @@ namespace Codes.Weapon
             playStartSound();
         }
 
+        public void updateWeaponState()
+        {
+            if (this.GetModel<IPauseModel>().IsPause.Value == true)
+            {
+                return;
+            }
+            Gun_Camera = cameraController.getMainCamera();
+            ShootPoint = Gun_Camera.transform;
+            Aiming = false;
+            info = GunAnimator.GetCurrentAnimatorStateInfo(0);
+            if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
+            {
+                playAimSound();
+            }
+            if (Input.GetKey(KeyCode.Mouse1) && isAllowedAiming())
+            {
+                Aiming = true;
+            }
+            UpdateAimState();
+            attack();
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reload();
+            }
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                CheckWeapon();
+            }
+            UpdateUI();
+            if (isAiming() && Gun_Camera == cameraController.first_person_camera)
+            {
+                CrossUI.SetActive(false);
+            }
+            else
+            {
+                CrossUI.SetActive(true);
+            }
+
+        }
+
         public void playStartSound()
         {
+            audioSource = GetComponent<AudioSource>();
             audioSource.clip = startClip;
             audioSource.Play();
         }
@@ -79,11 +124,16 @@ namespace Codes.Weapon
 
         protected void hitOnObjects(RaycastHit hit)
         {
-            GameObject hitParticleEffect = Instantiate(Hit_Particial, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)); //´´Ôì»ð¹âÌØÐ§
+            GameObject hitParticleEffect = Instantiate(Hit_Particial, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal)); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
             GameObject bulletHoleEffect = Instantiate(Bullet_Hole, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
 
             Destroy(bulletHoleEffect, 3f);
             Destroy(hitParticleEffect, 1f);
+        }
+
+        protected void hitOnEnemy(RaycastHit hit)
+        {
+            hit.collider.GetComponent<bool_control>().hit(Damage);
         }
 
         protected void doShoot()
@@ -91,11 +141,20 @@ namespace Codes.Weapon
             Vector3 spread = Random.insideUnitCircle * SpreadAngel * Gun_Camera.fieldOfView * 0.005f;
             if (isAiming()) spread = spread * 0.1f;
             RaycastHit hit;
-            Vector3 shootDirection = MuzzlePoint.forward + spread;
+            Vector3 shootDirection = ShootPoint.forward + spread;
             //UnityEngine.Debug.Log(spread.x + " " + spread.y);
-            if (Physics.Raycast(MuzzlePoint.position, shootDirection, out hit, Fire_Range))
+            Vector3 shootPosition = ShootPoint.position + 1.2f * ShootPoint.forward.normalized;
+            //shootPosition.y -= 0.3f;
+            if (Physics.Raycast(shootPosition, shootDirection, out hit, Fire_Range))
             {
-                hitOnObjects(hit);
+                if (hit.collider.GetComponent<bool_control>() != null)
+                {
+                    hitOnEnemy(hit);
+                }
+                else
+                {
+                    hitOnObjects(hit);
+                }
             }
         }
 
@@ -118,7 +177,7 @@ namespace Codes.Weapon
         }
         protected void PlayFireSound()
         {
-            audioSource.clip = fireClip; 
+            audioSource.clip = fireClip;
             audioSource.Play();
         }
         protected void PlayFireAnimation()
@@ -171,7 +230,7 @@ namespace Codes.Weapon
 
         protected void UpdateAimState()
         {
-            Gun_Camera.fieldOfView = Aiming ? 20 : OriginCameraField;
+            Gun_Camera.fieldOfView = Aiming ? 30 : OriginCameraField;
             GunAnimator.SetBool("Aim", Aiming);
         }
 
@@ -205,7 +264,7 @@ namespace Codes.Weapon
 
         public bool isReloading()
         {
-            //Á½ÖÖ»»×Óµ¯¶¯»­
+            //ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
             if (info.IsName("Reload Out Of Ammo") || info.IsName("Reload Ammo Left"))
             {
                 return true;
@@ -215,43 +274,16 @@ namespace Codes.Weapon
                 return false;
             }
         }
-
-        public void updateWeaponState()
+        public void setBulletInMag(int bullet_num)
         {
-            if (this.GetModel<IPauseModel>().IsPause.Value == true)
-            {
-                return;
-            }
-            Aiming = false;
-            info = GunAnimator.GetCurrentAnimatorStateInfo(0);
-            if (Input.GetKeyDown(KeyCode.Mouse1) && isAllowedAiming())
-            {
-                playAimSound();
-            }
-            if (Input.GetKey(KeyCode.Mouse1) && isAllowedAiming())
-            {
-                Aiming = true;
-            }
-            UpdateAimState();
-            attack();
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Reload();
-            }
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                CheckWeapon();
-            }
-            UpdateUI();
-            if (isAiming())
-            {
-                CrossUI.SetActive(false);
-            }
-            else
-            {
-                CrossUI.SetActive(true);    
-            }
+            Current_Bullet_In_Mag = bullet_num;
         }
+
+        public int getMagCapacity()
+        {
+            return Mag_Capacity;
+        }
+        
         public Animator getAnimator()
         {
             return GunAnimator;

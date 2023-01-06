@@ -2,6 +2,7 @@ using PlatformShoot;
 using QFramework;
 using UnityEngine;
 
+
 public class OOADFPS : Architecture<OOADFPS>
 {
     protected override void Init()
@@ -24,3 +25,5 @@ public class OOADFPS : Architecture<OOADFPS>
         }
     }
 }
+
+

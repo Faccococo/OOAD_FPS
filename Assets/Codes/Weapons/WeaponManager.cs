@@ -21,10 +21,10 @@ public class WeaponManager : OOADFPSController
     private void Update()
     {
         //Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
-        //if (this.GetModel<IPauseModel>().IsPause.Value == true)
-        //{
-        //    return;
-        //}
+        if (this.GetModel<IPauseModel>().IsPause.Value == true)
+        {
+            return;
+        }
         carriedWeapon.updateWeaponState();
         SwapWeapon();
     }
@@ -35,28 +35,31 @@ public class WeaponManager : OOADFPSController
     }
     private void SwapWeapon()
     {
+        if (carriedWeapon.isReloading())
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            carriedWeapon.gameObject.SetActive(false);
-            carriedWeapon.GunIcon.SetActive(false);
+            DeActivateCarriedWeapon();
             carriedWeapon = Main_Weapon;
-            carriedWeapon.gameObject.SetActive(true);
-            carriedWeapon.GunIcon.SetActive(true);
-            //carriedWeapon.playStartSound();
+            ActivateCarriedWeapon();
+            carriedWeapon.playStartSound();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             DeActivateCarriedWeapon();
             carriedWeapon = Secaondary_Weapon;
             ActivateCarriedWeapon();
-            //carriedWeapon.playStartSound();
+            carriedWeapon.playStartSound();
         }
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
             DeActivateCarriedWeapon();
             changeWeapon();
             ActivateCarriedWeapon();
-            //carriedWeapon.playStartSound();
+            carriedWeapon.playStartSound();
         }
     }
 

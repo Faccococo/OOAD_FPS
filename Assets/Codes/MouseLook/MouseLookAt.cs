@@ -7,14 +7,16 @@ using static OOADFPS;
 
 public class MouseLookAt : OOADFPSController
 {
-    [SerializeField] private Transform cameraTransform;
+    public CameraChange cameraController;
+    private Transform cameraTransform;
     private Transform characterTransform;
-    public float MouseSensity;
     private Vector3 camaraRotation;
     private float currentRecoilTime;
     private Vector2 currentRecoil;
     private CameraSpring cameraSpring;
+    private Camera camera_now;
 
+    public float MouseSensity;
     public Vector2 Rotate_Range;
     public AnimationCurve Recoil_Curve;
     public Vector2 Recoil_Range;
@@ -23,14 +25,17 @@ public class MouseLookAt : OOADFPSController
 
     void Start()
     {
-        characterTransform= transform;
+        cameraTransform = cameraController.getMainCamera().transform;
+        characterTransform = transform;
         Cursor.lockState = CursorLockMode.Locked;
         cameraSpring = GetComponentInChildren<CameraSpring>();
     }
 
     void Update()
     {
-        //Debug.Log(this.GetModel<IPauseModel>().IsPause.Value);
+        camera_now = cameraController.getMainCamera();
+        cameraTransform = camera_now.transform;
+        
         if (this.GetModel<IPauseModel>().IsPause.Value == true)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -47,7 +52,8 @@ public class MouseLookAt : OOADFPSController
         camaraRotation.y += inputX * MouseSensity * 0.01f;
 
         camaraRotation.x = Mathf.Clamp(camaraRotation.x, Rotate_Range.x, Rotate_Range.y);
-        cameraTransform.rotation = Quaternion.Euler(camaraRotation.x, camaraRotation.y, 0);
+        if (camera_now == cameraController.first_person_camera)
+            cameraTransform.rotation = Quaternion.Euler(camaraRotation.x, camaraRotation.y, 0);
         characterTransform.rotation = Quaternion.Euler(camaraRotation.x, camaraRotation.y, 0);
 
         CalculateRecoilOffset();

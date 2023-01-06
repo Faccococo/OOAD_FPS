@@ -11,13 +11,6 @@ namespace Codes.Weapon
         public Text Current_Max_Bullet_UI;
         public Text Weapon_Name;
 
-
-
-        protected override void Start()
-        {
-            base.Start();
-        }
-
         public override void attack()
         {
             if (Input.GetKey(KeyCode.Mouse0))
@@ -32,6 +25,5 @@ namespace Codes.Weapon
             Current_Max_Bullet_UI.text = Current_Max_Bullet.ToString();
             Weapon_Name.text = "Rifle";
         }
-
     }
 }

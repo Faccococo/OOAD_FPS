@@ -5,8 +5,7 @@ using static OOADFPS;
 public class User : OOADFPSController
 {
     public Animator panelController;
-    public GameObject target;
-    public GameObject icon;
+    public GameObject target, icon;
     public bool isOpen, isClose;
     private IObjectPoolSystem objectPool;
     private IAudioMgrSystem audioMgr;
@@ -25,6 +24,7 @@ public class User : OOADFPSController
         audioMgr = this.GetSystem<IAudioMgrSystem>();
         audioMgr.PlayBgm("bgm");
         mTarget = GameObject.FindGameObjectWithTag("Player").transform;
+        this.GetModel<IPauseModel>().IsPause.Value = false;
     }
 
     // Update is called once per frame
@@ -62,7 +62,6 @@ public class User : OOADFPSController
     private void LateUpdate()
     {
         icon.transform.localPosition = new Vector3(mTarget.position.x, icon.transform.position.y, mTarget.position.z);
-        icon.transform.localRotation = Quaternion.Euler(-90, 0, 90 + target.transform.root.eulerAngles.y);
-        //icon.transform.localRotation = new Quaternion(icon.transform.rotation.x, icon.transform.rotation.y, icon.transform.rotation.z + target.transform.rotation.z, icon.transform.localRotation.w);
+        icon.transform.localRotation = Quaternion.Euler(-90, 0, 90 + target.transform.eulerAngles.y);
     }
 }
